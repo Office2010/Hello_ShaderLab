@@ -1,0 +1,63 @@
+
+一。Matrix：
+
+	1.UNITY_MATRIX_MVP 	  //Object to Clip Space Matirx
+	
+	2._World2Object 	  // World to Object Matirx
+
+	3._Object2World		  // Object to World Matrix
+
+
+
+二。宏定义：
+
+	1._LightColor0		设置 Tags{"LightMode" = "ForwardBase"};#include "Lighting.cginc"
+	
+	2.UNITY_LIGHTMODEL_AMBIENT  //获取环境光部分。
+
+	3._WorldSpaceCameraPos 		//世界坐标下摄像机的位置
+
+	4. TANGENT_SPACE_ROTATION;  //添加这句话后 可直接使用rotation . rotation即为 Object to Tangent Matrix
+			==>:
+		   float3 binormal = cross (normalize(v.nomal) , normalize(v.tangent.xyz)) * v.tangent.w; //副贴钱
+		   float3x3 rotation = float3x3(v.tangent.xyz , binormal , v.normal);   //顺序为 切线，副切线，法线
+
+三。方法：
+
+	1.saturate（a）   	//它的作用是将 a 截取到 [0,1] 的范围内
+
+	2.reflect（i,n）	// i 为入射方向  n为法线方向   。它的作用计算 反射方向。
+
+	3.pow（a , b）		// 求 a 的 b 次幂
+	3.1 : sqrt(a)		// 求 a 的完全平方根。
+
+	4.max（a ，b）		// 求 a b 中的最大值
+
+	5. float3 WorldSpaceViewDir(float4 v)	//输入模型空间的顶点位置 返回世界空间下 该点到摄像机方向
+
+	6. float3 UnityWorldSpaceViewDir(float4 v)  //输入世界空间的顶点位置 返回世界空间下 该点到摄像机方向
+
+	7. float3 ObjSpaceViewDir(float v) 	//输入模型空间的顶点位置 返回模型空间下 该点到摄像机方向
+
+	8. float3 WorldSpaceLightDir(float v)   //输入模型空间的顶点位置  返回世界空间 该点到光源方向 没有归一化
+
+	9. float3 UnityWorldSpaceLightDir(float v)  //输入世界空间中的顶点 返回世界空间 该点到光源方向 没有归一化
+	
+	10.float3 ObjSpaceLightDir(float v)     //输入模型空间中的顶点  返回 模型空间  该点到光源方向 没有归一化
+
+	11.float3 UnityObjectToWorldNormal(float3 normal)  // 把法线 从 模型空间 转换到 世界空间 下
+
+	11.1 float3 UnityObjectToWorldDir(in float3 dir)   //把方向矢量从 模型空间 变换到 世界空间 中
+
+	11.2 float3 UnityWorldToObjectDir(float3 dir)      //把方向矢量从 世界空间 变换到 模型空间 中
+
+	12.o.uv = TRANSFORM_TEX( v.texcoord , _MainTex)    //对顶点纹理坐标进行变换，得到最终的纹理坐标。 
+			等同于  => o.uv = v.texcoord * _MainTex_ST.xy + _MainTex_ST.zw ;
+
+	13. float4 tex2D(sampler2D _MainTex , float2 uv)    //_MainTex 为纹理贴图  uv 为纹理坐标 ，返回在该坐标下的纹素值
+
+	14. fixed2 UnpackNormal（tex2D (*,*)） 	//来得到正确的 法线方向
+					notices: 使用时 要求法线贴图 的 TextureType 必须设置为 NormalMap.
+					==> : fixed4 packedNormal = tex2D (_BumpMap , i.uv.zw);
+						  fixed3 tanNormal;
+						  tanNormal.xy = packedNormal * 2 - 1;
