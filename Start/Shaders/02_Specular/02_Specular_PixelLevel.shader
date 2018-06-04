@@ -23,7 +23,7 @@ Shader "Exercises/Specular/02_SpecularPixelLevel"
 
 			#include "Lighting.cginc"
 
-			fixed4 _Diffuse;
+			fixed4 _Diffuse; 
 			fixed4 _Specular;
 			float _Gloss;
 

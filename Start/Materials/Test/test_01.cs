@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class test_01 : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class test_01 : MonoBehaviour
         {
             Debug.Log(listB[i]);
         }
-
+        //NetworkTransform
 		//TestAlgorithm ();
 	}
 	
