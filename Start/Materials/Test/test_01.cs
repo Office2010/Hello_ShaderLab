@@ -37,6 +37,11 @@ public class test_01 : MonoBehaviour
         {
             Debug.Log(listB[i]);
         }
+
+		//var a string = "132adf";
+		//Debug.Log(a);
+		//b := "1234";
+		//Debug.Log(b);
         //NetworkTransform
 		//TestAlgorithm ();
 	}
